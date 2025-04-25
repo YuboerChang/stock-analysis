@@ -7,5 +7,5 @@ def ak_data_format(stock_daily):
     stock_daily.set_index('Date', inplace=True)
     return stock_daily
 
-def draw_stock_chart(stock_daily,save_path):
-    mpf.plot(stock_daily, type='candle', volume=True, title='K-line', ylabel='Price', ylabel_lower='Volume',savefig=save_path)
+def draw_stock_chart(format_stock_daily,save_path):
+    mpf.plot(format_stock_daily, type='candle', volume=True, title='K-line', ylabel='Price', ylabel_lower='Volume',savefig=save_path)

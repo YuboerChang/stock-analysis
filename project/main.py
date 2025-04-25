@@ -1,12 +1,16 @@
-# from machain import get_stock_daily,get_stock_message
-# from draw import ak_data_format,draw_stock_chart
+from script import machain
 
-# stock_code='603501'
-# # stock_data = get_stock_daily(stock_code,60)
-# # stock_data.to_csv("./data/"+stock_code+".csv",index=False)
-# # stock_data = ak_data_format(stock_data)
-# # save_path = './data/'+stock_code+'_chart.png'
-# # draw_stock_chart(stock_data,save_path)
+def analysis_bug_stock():
+    # department_names = ['半导体','电子元件','能源金属','电力行业','互联网服务','光学光电子','通用设备' ]
+    department_names = ['半导体']
+    for department in department_names:
+        department_stocks = machain.get_today_department(department)
+        stock_codes = department_stocks['代码'].tolist()
+        for stock_code in stock_codes:
+            stock_daily = machain.get_stock_daily(stock_code,30)
+            if(machain.get_undulant_situation(stock_daily) and machain.get_low_point_situation(stock_daily)):
+                stock_msg = department_stocks[department_stocks['代码'] == stock_code]
+                machain.draw_stock_daily_picture(stock_daily,'../data/'+ stock_code + '_' + stock_msg['名称'].values[0] +'.png')
 
-# # msg = get_stock_message(stock_code)
-# # msg.to_csv("./data/"+stock_code+"_msg.csv",index=False)
+analysis_bug_stock()
+print("----  分析完成，请查看data文件夹！  ----")
