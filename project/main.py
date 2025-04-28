@@ -7,10 +7,13 @@ def analysis_bug_stock():
         department_stocks = machain.get_today_department(department)
         stock_codes = department_stocks['代码'].tolist()
         for stock_code in stock_codes:
-            stock_daily = machain.get_stock_daily(stock_code,30)
-            if(machain.get_undulant_situation(stock_daily) and machain.get_low_point_situation(stock_daily)):
-                stock_msg = department_stocks[department_stocks['代码'] == stock_code]
-                machain.draw_stock_daily_picture(stock_daily,'../data/'+ stock_code + '_' + stock_msg['名称'].values[0] +'.png')
+            stock_daily = machain.get_stock_daily(stock_code, 60)
+            if(not machain.get_undulant_situation(stock_daily)):
+                continue
+            if(not machain.get_low_point_situation(stock_daily)):
+                continue
+            stock_msg = department_stocks[department_stocks['代码'] == stock_code]
+            machain.draw_stock_daily_picture(stock_daily,'../data/'+ stock_code + '_' + stock_msg['名称'].values[0] +'.png')
 
 analysis_bug_stock()
 print("----  分析完成，请查看data文件夹！  ----")

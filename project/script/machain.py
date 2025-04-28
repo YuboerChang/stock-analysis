@@ -35,7 +35,7 @@ def get_stock_daily(stock_code,days):
 def get_undulant_situation(stock_data):
     closing_price = stock_data['收盘'].tolist()
     undulant_ratio = compute.get_difference_ratio(closing_price)
-    if(undulant_ratio > 0.2):
+    if(undulant_ratio > 0.3):
         return True
     else:
         return False
@@ -44,7 +44,7 @@ def get_undulant_situation(stock_data):
 def get_low_point_situation(stock_data):
     closing_price = stock_data['收盘'].tolist()
     position_data = compute.get_point_situation(closing_price)
-    if(position_data > 3):
+    if(position_data > 4):
         return True
     else:
         return False
