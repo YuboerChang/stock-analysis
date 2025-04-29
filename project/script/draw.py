@@ -3,6 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def ak_data_format(stock_daily):
+    if(len(stock_daily) > 20):
+        stock_daily['ma_20'] = stock_daily['收盘'].rolling(window=20).mean()
     stock_daily = stock_daily.rename(columns={'日期': 'Date', '开盘': 'Open', '最高': 'High', '最低': 'Low', '收盘': 'Close', '成交量': 'Volume'})
     stock_daily['Date'] = pd.to_datetime(stock_daily['Date'])
     stock_daily.set_index('Date', inplace=True)
@@ -19,4 +21,14 @@ def draw_stock_chart(format_stock_daily,save_path):
     chart_style = mpf.make_mpf_style(marketcolors=color)
     plt.rcParams['font.sans-serif'] = ['SimHei']
     plt.rcParams['axes.unicode_minus'] = False
-    mpf.plot(format_stock_daily, type='candle', volume=True, style=chart_style, savefig=save_path)
+    if(len(format_stock_daily) > 20):
+        ap = mpf.make_addplot(format_stock_daily['ma_20'])
+        mpf.plot(format_stock_daily, type='candle', addplot=ap, volume=True, style=chart_style, savefig=save_path)
+    else:
+        mpf.plot(format_stock_daily, type='candle', volume=True, style=chart_style, savefig=save_path)
+
+
+#特定股票走势画图
+def draw_stock_daily_picture(stock_daily, path):
+    format_stock_daily = ak_data_format(stock_daily)
+    draw_stock_chart(format_stock_daily,path)
