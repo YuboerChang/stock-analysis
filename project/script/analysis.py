@@ -36,7 +36,7 @@ def is_higher_than_20_average_line_recently(stock_data):
     previous_5_days_below = previous_5_days_below_count >= 2
     return recent_2_days_above and previous_5_days_below
 
-#判断近7天是否属于平稳曲线
+#判断近10天是否属于平稳曲线
 def is_stable_line_recently(stock_data):
     last_10_days = stock_data.tail(10)
     all_stable_day = (abs(last_10_days['涨跌幅']) < 3).all()
@@ -44,3 +44,10 @@ def is_stable_line_recently(stock_data):
     rise_day = (last_10_days['涨跌幅'] > 0).sum()
     range_sum = last_10_days['涨跌幅'].sum()
     return all_stable_day and fall_day <= 7 and rise_day <= 7 and abs(range_sum) <= 5
+
+#判断近几天是否小幅连涨
+def is_rise_continuously(stock_data):
+    last_5_days = stock_data.tail(5)
+    ranges = last_5_days['涨跌幅'].tolist()
+    rise_day = sum(0 < i < 5 for i in ranges)
+    return rise_day >= 4
