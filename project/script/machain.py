@@ -1,38 +1,56 @@
 from . import analysis, data_source, draw
 
-def analysis_low_point_stock(department_names):
+def analysis_stocks_of_departments(department_names):
     for department in department_names:
-        department_stocks = data_source.get_today_department(department)
+        department_stocks = data_source.get_department_stocks(department)
         stock_codes = department_stocks['代码'].tolist()
-        for stock_code in stock_codes:
-            try:
-                stock_daily = data_source.get_stock_daily(stock_code, 90)
-                if(not analysis.is_large_fluctuations(stock_daily)):
-                    continue
-                if(not analysis.is_low_point(stock_daily)):
-                    continue
-                if(not analysis.is_lower_than_median(stock_daily) and not analysis.is_lower_than_average(stock_daily)):
-                    #长期来看，股价较高，才有投资意义
-                    continue
-                # if(not analysis.is_higher_than_20_average_line_recently(stock_daily)):
-                #     continue
-                # if(not analysis.is_stable_line_recently(stock_daily)):
-                #     continue
-                stock_msg = department_stocks[department_stocks['代码'] == stock_code]
-                draw.draw_stock_daily_picture(stock_daily,'../data/'+ stock_code + '_' + stock_msg['名称'].values[0] +'.png')
-            except Exception as e:
-                print(stock_code + f" 分析时发生异常: {e}")
+        analysis_stocks(stock_codes)
 
-def analysis_upward_trend_stock(department_names):
-    for department in department_names:
-        department_stocks = data_source.get_today_department(department)
-        stock_codes = department_stocks['代码'].tolist()
-        for stock_code in stock_codes:
-            try:
-                stock_daily = data_source.get_stock_daily(stock_code, 60)
-                if(not analysis.is_rise_continuously(stock_daily)):
-                    continue
-                stock_msg = department_stocks[department_stocks['代码'] == stock_code]
-                draw.draw_stock_daily_picture(stock_daily,'../data/'+ stock_code + '_' + stock_msg['名称'].values[0] +'.png')
-            except Exception as e:
-                print(stock_code + f" 分析时发生异常: {e}")
+def analysis_stocks_of_concepts(concept_names):
+    for concept in concept_names:
+        concept_stocks = data_source.get_concept_stocks(concept)
+        stock_codes = concept_stocks['代码'].tolist()
+        analysis_stocks(stock_codes)
+
+def analysis_stocks(stock_codes):
+    for stock_code in stock_codes:
+        stock_daily = data_source.get_stock_daily(stock_code, 90)
+        if(not is_low_point_stock(stock_daily)):
+            continue
+        # if(not is_upward_trend_stocks(stock_daily)):
+        #     continue
+        stock_name = data_source.get_stock_name(stock_code)
+        draw.draw_stock_daily_picture(stock_daily,'../data/'+ stock_code + '_' + stock_name +'.png')
+
+#低点位置分析
+def is_low_point_stock(stock_daily):
+        is_ok = True
+        try:
+            if(not analysis.is_large_fluctuations(stock_daily)):
+                is_ok = False
+            if(not analysis.is_low_point(stock_daily)):
+                is_ok = False
+            if(not analysis.is_lower_than_median(stock_daily) and not analysis.is_lower_than_average(stock_daily)):
+                #长期来看，股价较高，才有投资意义
+                is_ok = False
+            if(not analysis.is_higher_than_20_average_line_recently(stock_daily)):
+                is_ok = False
+            # if(not analysis.is_stable_line_recently(stock_daily)):
+            #     is_ok = False
+        except Exception as e:
+            print(stock_daily['股票代码'].values[0] + f" 分析时发生异常: {e}")
+            is_ok = False
+        finally:
+            return is_ok
+
+#上升趋势分析
+def is_upward_trend_stocks(stock_daily):
+    is_ok = True
+    try:
+        if(not analysis.is_rise_continuously(stock_daily)):
+            is_ok = False
+    except Exception as e:
+        print(stock_daily['股票代码'].values[0] + f" 分析时发生异常: {e}")
+        is_ok = False
+    finally:
+        return is_ok

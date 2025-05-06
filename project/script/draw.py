@@ -30,5 +30,8 @@ def draw_stock_chart(format_stock_daily,save_path):
 
 #特定股票走势画图
 def draw_stock_daily_picture(stock_daily, path):
-    format_stock_daily = ak_data_format(stock_daily)
-    draw_stock_chart(format_stock_daily,path)
+    try:
+        format_stock_daily = ak_data_format(stock_daily)
+        draw_stock_chart(format_stock_daily,path)
+    except Exception as e:
+        print(path + f" 画图时发生异常: {e}")

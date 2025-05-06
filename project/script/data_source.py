@@ -1,16 +1,24 @@
 import akshare as ak
 from . import utils
 
-#获取近日盘面板块信息
-def get_today_all():
+#获取盘面板块信息
+def get_ddepartments():
     return ak.stock_board_industry_name_em()
 
-#获取当日板块股票信息
-def get_today_department(department_name):
+#获取板块的股票信息
+def get_department_stocks(department_name):
     all_department_data = ak.stock_board_industry_name_em()
     department_code = all_department_data[all_department_data['板块名称'] == department_name]['板块代码'].values[0]
     department_stocks = ak.stock_board_industry_cons_em(symbol=department_code)
     return department_stocks
+
+#获取盘面概念板块信息
+def get_concepts():
+    return ak.stock_board_concept_name_em()
+
+#获取概念板块的股票信息
+def get_concept_stocks(concept_name):
+    return ak.stock_board_concept_cons_em(symbol=concept_name)
 
 #获取个股信息，代码或名字均可
 def get_stock_message(stock):
@@ -20,9 +28,14 @@ def get_stock_message(stock):
 
 #已知股票代码，获取股票名称
 def get_stock_name(stock_code):
-    stocks = ak.stock_zh_a_spot_em()
-    stock_msg = stocks[stocks['代码'] == stock_code]
-    return stock_msg['名称'].values[0]
+    stock_name = ''
+    try:
+        stocks = ak.stock_zh_a_spot_em()
+        stock_msg = stocks[stocks['代码'] == stock_code]
+        stock_name = stock_msg['名称'].values[0]
+    except Exception as e:
+        print(stock_code + f" 获取股票名称发生异常: {e}")
+    return stock_name
 
 #获取近日个股走势信息
 def get_stock_daily(stock_code,days):
