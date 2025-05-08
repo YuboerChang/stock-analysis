@@ -2,7 +2,7 @@ import akshare as ak
 from . import utils
 
 #获取盘面板块信息
-def get_ddepartments():
+def get_departments():
     return ak.stock_board_industry_name_em()
 
 #获取板块的股票信息

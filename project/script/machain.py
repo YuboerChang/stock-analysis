@@ -35,8 +35,8 @@ def is_low_point_stock(stock_daily):
                 is_ok = False
             if(not analysis.is_higher_than_20_average_line_recently(stock_daily)):
                 is_ok = False
-            # if(not analysis.is_stable_line_recently(stock_daily)):
-            #     is_ok = False
+            if(not analysis.is_stable_line_recently(stock_daily, 3)):
+                is_ok = False
         except Exception as e:
             print(stock_daily['股票代码'].values[0] + f" 分析时发生异常: {e}")
             is_ok = False

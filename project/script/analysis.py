@@ -29,21 +29,21 @@ def is_lower_than_average(stock_data):
 def is_higher_than_20_average_line_recently(stock_data):
     stock_data['ma_20'] = stock_data['收盘'].rolling(window=20).mean()
     last_7_days = stock_data.tail(7)
-    # 近三日收盘价是否在 20 日均线之上
+    # 近2日收盘价是否在 20 日均线之上
     recent_2_days_above = (last_7_days['收盘'].iloc[-2:] > last_7_days['ma_20'].iloc[-2:]).all()
-    # 再往前 5 日收盘价是否至少有 2 天在 20 日均线之下
+    # 再往前5日收盘价是否至少有 3 天在 20 日均线之下
     previous_5_days_below_count = (last_7_days['收盘'].iloc[:5] < last_7_days['ma_20'].iloc[:5]).sum()
-    previous_5_days_below = previous_5_days_below_count >= 2
+    previous_5_days_below = previous_5_days_below_count >= 3
     return recent_2_days_above and previous_5_days_below
 
-#判断近10天是否属于平稳曲线
-def is_stable_line_recently(stock_data):
-    last_10_days = stock_data.tail(10)
-    all_stable_day = (abs(last_10_days['涨跌幅']) < 3).all()
-    fall_day = (last_10_days['涨跌幅'] < 0).sum()
-    rise_day = (last_10_days['涨跌幅'] > 0).sum()
-    range_sum = last_10_days['涨跌幅'].sum()
-    return all_stable_day and fall_day <= 7 and rise_day <= 7 and abs(range_sum) <= 5
+#判断近n天是否属于平稳曲线
+def is_stable_line_recently(stock_data, days):
+    last_n_days = stock_data.tail(days)
+    all_stable_day = (abs(last_n_days['涨跌幅']) < 4).all()
+    fall_day = (last_n_days['涨跌幅'] < 0).sum()
+    rise_day = (last_n_days['涨跌幅'] > 0).sum()
+    range_sum = last_n_days['涨跌幅'].sum()
+    return all_stable_day and fall_day <= (days/2*3) and rise_day <= (days/2*3) and abs(range_sum) <= 6
 
 #判断近几天是否小幅连涨
 def is_rise_continuously(stock_data):
