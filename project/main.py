@@ -1,16 +1,12 @@
-from script import machain,data_source
+from script.machain import stock_machain,department_machain
 
 def run():
-    # data = data_source.get_departments()
-    # data.to_csv("../data/板块.csv")
-    # department_names = ['能源金属','电力行业']
-    # machain.analysis_stocks_of_departments(department_names)
+    department_names = department_machain.get_target_departmens()
+    stock_machain.analysis_stocks_of_departments(department_names)
 
+    # concept_names = department_machain.get_target_concepts()
+    # stock_machain.analysis_stocks_of_concepts(concept_names)
 
-    # data = data_source.get_concepts()
-    # data.to_csv("../data/概念.csv")
-    concept_names = ['新能源','绿色电力']
-    machain.analysis_stocks_of_concepts(concept_names)
 
 
 run()

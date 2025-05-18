@@ -1,4 +1,5 @@
-from . import analysis, data_source, draw
+from ..tools import analysis, data_source
+from ..tools import draw
 
 def analysis_stocks_of_departments(department_names):
     for department in department_names:
@@ -33,8 +34,8 @@ def is_low_point_stock(stock_daily):
             if(not analysis.is_lower_than_median(stock_daily) and not analysis.is_lower_than_average(stock_daily)):
                 #长期来看，股价较高，才有投资意义
                 is_ok = False
-            if(not analysis.is_higher_than_20_average_line_recently(stock_daily)):
-                is_ok = False
+            # if(not analysis.is_higher_than_20_average_line_recently(stock_daily)):
+            #     is_ok = False
             if(not analysis.is_stable_line_recently(stock_daily, 3)):
                 is_ok = False
         except Exception as e:
