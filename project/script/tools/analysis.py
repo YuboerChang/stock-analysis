@@ -51,3 +51,14 @@ def is_rise_continuously(stock_data):
     ranges = last_5_days['涨跌幅'].tolist()
     rise_day = sum(0 < i < 5 for i in ranges)
     return rise_day >= 4
+
+#判断是否为普通A股账户就能购买的沪深股
+def is_hu_shen_stock(stock_code):
+    # 判断是否为沪市代码 (600/601/603/605开头的主板)
+    if stock_code.startswith(('600', '601', '603', '605')):
+        return True
+    # 判断是否为深市代码 (000开头的主板，002/003/004开头的原中小板)
+    if stock_code.startswith(('000', '002', '003', '004')):
+        return True
+    # 688开头的沪科创板，300/301开头的深创业板，代码以 8 开头的北交所，代码以 400、430、830 开头的新三板，等等
+    return False

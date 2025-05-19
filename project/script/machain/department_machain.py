@@ -1,5 +1,10 @@
 from ..tools import data_source
 
+def analysis_departments_quickly(folder):
+    analysis_top_departments(folder)
+    analysis_top_concepts(folder)
+    analysis_all_departments_and_concepts(folder)
+
 def analysis_top_departments(folder):
     all_departments = data_source.get_departments()
     rise_departments = all_departments.iloc[:10]
@@ -19,13 +24,5 @@ def analysis_top_concepts(folder):
 def analysis_all_departments_and_concepts(folder):
     all_departments = data_source.get_departments()
     all_departments.to_csv(folder + "板块全部.csv", index=False)
-    all_concepts.to_csv(folder + "概念板块全部.csv", index=False)
     all_concepts = data_source.get_concepts()
-
-def get_target_departmens():
-    departments = ['能源金属','电力行业']
-    return departments
-
-def get_target_concepts():
-    concepts = ['新能源','绿色电力']
-    return concepts
+    all_concepts.to_csv(folder + "概念板块全部.csv", index=False)
