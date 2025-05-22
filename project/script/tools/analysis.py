@@ -62,3 +62,9 @@ def is_hu_shen_stock(stock_code):
         return True
     # 688开头的沪科创板，300/301开头的深创业板，代码以 8 开头的北交所，代码以 400、430、830 开头的新三板，等等
     return False
+
+#最后一天是下跌的
+def is_fall_last_day(stock_data):
+    last_day = stock_data.tail(1)
+    last_day_volatility = last_day['涨跌幅'].tolist()
+    return last_day_volatility[0] < 0

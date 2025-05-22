@@ -22,8 +22,10 @@ def analysis_stocks(stock_codes, file_path):
             continue
         # if(not is_upward_trend_stocks(stock_daily)):
         #     continue
-        # if(not analysis.is_higher_than_20_average_line_recently(stock_daily)):
-        #     is_ok = False
+        if(not analysis.is_higher_than_20_average_line_recently(stock_daily)):
+            is_ok = False
+        if(not analysis.is_fall_last_day(stock_daily)):
+            continue
         stock_name = data_source.get_stock_name(stock_code)
         draw.draw_stock_daily_picture(stock_daily, file_path + stock_code + '_' + stock_name +'.png')
 
