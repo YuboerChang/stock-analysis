@@ -10,7 +10,7 @@ def ak_data_format(stock_daily):
     stock_daily.set_index('Date', inplace=True)
     return stock_daily
 
-def draw_stock_chart(format_stock_daily,save_path):
+def draw_stock_chart(format_stock_daily, save_path):
     color = mpf.make_marketcolors(
         up='red', down='green',  # K 线颜色，上涨为绿色，下跌为红色
         edge={'up': 'red', 'down': 'green'},  # K 线边框颜色

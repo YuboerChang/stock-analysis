@@ -38,7 +38,7 @@ def get_stock_name(stock_code):
     return stock_name
 
 #获取近日个股走势信息
-def get_stock_daily(stock_code,days):
+def get_stock_daily(stock_code, days):
     end_date = utils.get_today_format()
     start_date = utils.get_before_day_format(days)
     stock_daily = ak.stock_zh_a_hist(symbol=stock_code, period="daily", start_date=start_date, end_date=end_date)
