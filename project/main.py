@@ -21,9 +21,9 @@ def test():
 
 
 # run_blocks()
-# run_department_stocks()
+run_department_stocks()
 # run_concept_stocks()
-test()
+# test()
 
 print("----                              ----")
 print("----  分析完成，请查看data文件夹！  ----")
