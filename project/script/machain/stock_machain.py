@@ -1,17 +1,18 @@
-from ..tools import analysis, data_source
-from ..tools import draw
+from ..tools import analysis, data_source, draw, utils
 
 def analysis_stocks_of_departments(department_names, file_path):
-    for department in department_names:
-        department_stocks = data_source.get_department_stocks(department)
+    for department_name in department_names:
+        department_stocks = data_source.get_department_stocks(department_name)
         stock_codes = department_stocks['代码'].tolist()
-        analysis_low_point_stocks(stock_codes, file_path)
+        utils.make_directory(file_path + department_name + '/')
+        analysis_low_point_stocks(stock_codes, file_path + department_name + '/')
 
 def analysis_stocks_of_concepts(concept_names, file_path):
-    for concept in concept_names:
-        concept_stocks = data_source.get_concept_stocks(concept)
+    for concept_name in concept_names:
+        concept_stocks = data_source.get_concept_stocks(concept_name)
         stock_codes = concept_stocks['代码'].tolist()
-        analysis_low_point_stocks(stock_codes, file_path)
+        utils.make_directory(file_path + concept_name + '/')
+        analysis_low_point_stocks(stock_codes, file_path + concept_name + '/')
 
 def analysis_low_point_stocks(stock_codes, file_path):
     for stock_code in stock_codes:

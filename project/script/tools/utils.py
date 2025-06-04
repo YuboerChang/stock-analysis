@@ -1,4 +1,5 @@
 from datetime import date,timedelta
+from pathlib import Path
 
 def get_today_format():
     return date.today().strftime("%Y%m%d")
@@ -38,3 +39,11 @@ def get_fluctuation_times(list):
         if(abs(fluc) > 6):
             times+=1
     return times
+
+#文件夹创建处理
+def make_directory(folder):
+    folder_path = Path(folder)
+    try:
+        folder_path.mkdir(parents=True, exist_ok=True)
+    except OSError as e:
+        print(f"创建文件夹{folder}失败: {e}")
