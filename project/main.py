@@ -1,6 +1,6 @@
 from script.machain import block_machain
 from script.machain import stock_machain
-from script.tools import data_source,analysis
+import time
 
 def run_blocks():
     block_machain.analysis_departments_quickly('../data/')
@@ -14,14 +14,13 @@ def run_concept_stocks():
     stock_machain.analysis_stocks_of_concepts(concept_names, '../data/')
 
 def test():
-    stock = '603728'
-    stock_dairy = data_source.get_stock_daily(stock,90)
-    analysis.is_many_fluctuations(stock_dairy)
+    print("test1")
+    time.sleep(10)
     print('test end!')
 
 
-# run_blocks()
-run_department_stocks()
+run_blocks()
+# run_department_stocks()
 # run_concept_stocks()
 # test()
 
