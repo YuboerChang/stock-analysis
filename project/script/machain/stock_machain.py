@@ -15,6 +15,8 @@ def analysis_stocks_of_concepts(concept_names, file_path):
         analysis_low_point_stocks(stock_codes, file_path + concept_name + '/')
 
 def analysis_low_point_stocks(stock_codes, file_path):
+    # 大量请求前先休眠，防止请求过热
+    utils.waiting_for_processing(30)
     for stock_code in stock_codes:
         if(not analysis.is_hu_shen_stock(stock_code)):
             continue

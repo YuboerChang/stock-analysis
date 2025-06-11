@@ -1,5 +1,6 @@
 from datetime import date,timedelta
 from pathlib import Path
+import time
 
 def get_today_format():
     return date.today().strftime("%Y%m%d")
@@ -20,8 +21,8 @@ def get_point_ratio(list):
     min_value = min(list)
     point_value = list[-1]
     if(min_value == point_value):
-        #特殊位置，尾部即低点，规定返回100
-        return 10
+        #特殊位置，尾部即低点，无穷大，规定返回100
+        return 100
     return round(abs(max_value - point_value) / abs(min_value - point_value), 2)
 
 #数据波动次数计算，如果偏离值超过6，则可认为是一次波动
@@ -47,3 +48,15 @@ def make_directory(folder):
         folder_path.mkdir(parents=True, exist_ok=True)
     except OSError as e:
         print(f"创建文件夹{folder}失败: {e}")
+
+#冷却处理，防止请求过热
+def waiting_for_processing(seconds):
+    if(not isinstance(seconds, int) and seconds < 0):
+        print("---  参数错误，请使用正整数作为参数！  ---")
+        return
+    if(seconds > 180):
+        print("---  数值过大，休眠时间不应大于180秒！  ---")
+        return
+    print("---  进入休眠  ---")
+    time.sleep(seconds)
+    print("---  休眠结束  ---")
