@@ -16,7 +16,7 @@ def analysis_stocks_of_concepts(concept_names, file_path):
 
 def analysis_low_point_stocks(stock_codes, file_path):
     # 大量请求前先休眠，防止请求过热
-    utils.waiting_for_processing(30)
+    # utils.waiting_for_processing(30)
     for stock_code in stock_codes:
         if(not analysis.is_hu_shen_stock(stock_code)):
             continue
@@ -52,5 +52,7 @@ def calculate_score(stock_daily):
     if(analysis.is_fall_last_day(stock_daily)):
         score+=1
     if(analysis.is_many_fluctuations(stock_daily)):
+        score+=1
+    if(analysis.is_ten_last(stock_daily)):
         score+=1
     return score

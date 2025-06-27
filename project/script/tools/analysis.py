@@ -81,3 +81,12 @@ def is_many_fluctuations(stock_data):
     ranges = stock_data['涨跌幅'].tolist()
     times = utils.get_fluctuation_times(ranges)
     return times >= 6
+
+#判断日k尾日是否收了一个十字形状 —— 开盘和收盘位置处于中间，偏离值不超过中间位置30%
+def is_ten_last(stock_data):
+    last_day = stock_data.iloc[-1]
+    median = round((last_day['最高'] + last_day['最低']) / 2, 4)
+    distance = round((last_day['最高'] - last_day['最低']) / 2, 4)
+    open_ratio = round(abs(last_day['开盘'] - median) / distance, 2)
+    close_ratio = round(abs(last_day['收盘'] - median) / distance, 2)
+    return (open_ratio < 0.3) and (close_ratio < 0.3)

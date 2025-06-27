@@ -2,7 +2,7 @@ from ..tools import data_source, utils, draw
 
 def get_departments_quickly(folder):
     get_top_departments(folder)
-    get_top_concepts(folder)
+    # get_top_concepts(folder)
     get_all_departments_and_concepts(folder)
     low_point_folder = folder + 'low_point_block/'
     utils.make_directory(low_point_folder)
@@ -27,8 +27,8 @@ def get_top_concepts(folder):
 def get_all_departments_and_concepts(folder):
     all_departments = data_source.get_departments()
     all_departments.to_csv(folder + "行业板块全部.csv", index=False)
-    all_concepts = data_source.get_concepts()
-    all_concepts.to_csv(folder + "概念板块全部.csv", index=False)
+    # all_concepts = data_source.get_concepts()
+    # all_concepts.to_csv(folder + "概念板块全部.csv", index=False)
 
 #全盘跑数据找低位板块
 def analysis_low_point_departments(folder):
