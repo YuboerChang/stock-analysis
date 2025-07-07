@@ -6,7 +6,7 @@ def run_blocks():
     block_machain.get_departments_quickly('../data/')
 
 def run_department_stocks():
-    department_names = ['能源金属','电力行业','有色金属','小金属']
+    department_names = ['电网设备','电力行业']
     stock_machain.analysis_stocks_of_departments(department_names, '../data/')
 
 def run_concept_stocks():
@@ -22,10 +22,8 @@ def test():
             draw.draw_stock_daily_picture(stock_daily, '../data/' + stock_code +'.png')
 
 
-
-
-# run_blocks()
-run_department_stocks()
+run_blocks()
+# run_department_stocks()
 # run_concept_stocks()
 # test()
 
