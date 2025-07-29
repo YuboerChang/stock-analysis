@@ -50,3 +50,10 @@ def get_department_daily(department_name, days):
     start_date = utils.get_before_day_format(days)
     stock_daily = ak.stock_board_industry_hist_em(symbol=department_name, period="日k", start_date=start_date, end_date=end_date)
     return stock_daily
+
+#获取概念板块历史数据
+def get_concept_daily(concept_name, days):
+    end_date = utils.get_today_format()
+    start_date = utils.get_before_day_format(days)
+    stock_daily = ak.stock_board_concept_hist_em(symbol=concept_name, period="daily", start_date=start_date, end_date=end_date)
+    return stock_daily

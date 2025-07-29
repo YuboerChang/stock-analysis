@@ -55,4 +55,6 @@ def calculate_score(stock_daily):
         score+=1
     if(analysis.is_ten_last(stock_daily)):
         score+=1
+    if(analysis.is_upper_spindle(stock_daily)):
+        score+=1
     return score

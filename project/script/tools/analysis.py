@@ -89,4 +89,10 @@ def is_ten_last(stock_data):
     distance = round((last_day['最高'] - last_day['最低']) / 2, 4)
     open_ratio = round(abs(last_day['开盘'] - median) / distance, 2)
     close_ratio = round(abs(last_day['收盘'] - median) / distance, 2)
-    return (open_ratio < 0.3) and (close_ratio < 0.3)
+    return open_ratio < 0.3 and close_ratio < 0.3
+
+#上纺锤形状
+def is_upper_spindle(stock_data):
+    last_day = stock_data.iloc[-1]
+    median = round((last_day['最高'] + last_day['最低']) / 2, 4)
+    return last_day['开盘'] > median and last_day['收盘'] > median

@@ -6,11 +6,13 @@ def run_blocks():
     block_machain.get_departments_quickly('../data/')
 
 def run_department_stocks():
-    department_names = ['电网设备','电力行业']
+    department_names = ['电源设备']
     stock_machain.analysis_stocks_of_departments(department_names, '../data/')
 
 def run_concept_stocks():
-    concept_names = ['新能源','绿色电力','人形机器人']
+    # all_concepts = data_source.get_concepts()
+    # all_concepts.to_csv('../data/概念板块全部.csv', index=False)
+    concept_names = ['军工']
     stock_machain.analysis_stocks_of_concepts(concept_names, '../data/')
 
 def test():
