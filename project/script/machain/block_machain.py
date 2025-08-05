@@ -14,7 +14,7 @@ def get_all_departments_and_concepts(folder):
 #找低位行业板块
 def analysis_noteworthy_departments(folder, department_names, is_draw):
     depart_folder = folder + 'department/'
-    del_folder(depart_folder)
+    make_folder(depart_folder)
     # 空数组则自动获取获取全部板块
     if(department_names is None or not department_names):
         all_departments = data_source.get_departments()
@@ -28,19 +28,24 @@ def analysis_noteworthy_departments(folder, department_names, is_draw):
 #找低位概念板块
 def analysis_noteworthy_concepts(folder, concept_names, is_draw):
     depart_folder = folder + 'concept/'
-    del_folder(depart_folder)
+    make_folder(depart_folder)
     # 空数组则自动获取获取全部板块
     if(concept_names is None or not concept_names):
         all_concepts = data_source.get_concepts()
         concept_names = all_concepts['板块名称'].to_list()
     noteworthy_list = []
+    cnt = 1
     for concept_name in concept_names:
         concept_daily = data_source.get_concept_daily(concept_name, 45)
         noteworthy_list = block_data_analysis(depart_folder, concept_name, concept_daily, is_draw, noteworthy_list)
+        # 概念板块数量太多，限制一下数量
+        if(cnt >= 30):
+            break
+        cnt+=1
     return noteworthy_list
 
 #文件目录处理
-def del_folder(folder):
+def make_folder(folder):
     low_point_folder = folder + 'low_point_block/'
     utils.make_directory(low_point_folder)
     hot_folder = folder + 'hot_block/'
